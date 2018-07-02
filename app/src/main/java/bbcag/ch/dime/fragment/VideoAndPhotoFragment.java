@@ -1,152 +1,120 @@
 package bbcag.ch.dime.fragment;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+
+import bbcag.ch.dime.MainActivity;
 import bbcag.ch.dime.R;
-import bbcag.ch.dime.dal.GalleryDao;
-import bbcag.ch.dime.dummy.DummyContent;
-import bbcag.ch.dime.dummy.DummyContent.DummyItem;
-import bbcag.ch.dime.model.Editor;
-import bbcag.ch.dime.model.Gallery;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
-/*public class VideoAndPhotoFragment extends Fragment {
-
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 2;
-    private OnListFragmentInteractionListener mListener;
-
-    *//**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     *//*
-    public VideoAndPhotoFragment() {
-    }
-
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static VideoAndPhotoFragment newInstance(int columnCount) {
-        VideoAndPhotoFragment fragment = new VideoAndPhotoFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_videoandphoto_list, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyVideoAndPhotoRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-        }
-        return view;
-    }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    *//**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     *//*
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
-    }*/
 public class VideoAndPhotoFragment extends Fragment {
-    public static VideoAndPhotoFragment newInstance() {
+private static String TAG = "ImageInfo";
+private int badiId;
+private ProgressBar progressBar;
+public static final String WIE_WARM_API_URL = "http://www.wiewarm.ch/api/v1/bad.json/";
+
+public static VideoAndPhotoFragment newInstance() {
         VideoAndPhotoFragment fragment = new VideoAndPhotoFragment();
         return fragment;
-    }
-
-/*    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }*/
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_videoandphoto, container, false);
-
-        ListView badis = view.findViewById(R.id.badiliste);
-        ArrayAdapter<Gallery> badiAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1);
-        badiAdapter.addAll(GalleryDao.getAll());
-        badis.setAdapter(badiAdapter);
-
-        AdapterView.OnItemClickListener mListClickedHandler = new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-                Intent intent = new Intent(getContext(), Editor.class);
-                Gallery selected = (Gallery) parent.getItemAtPosition(position);
-                intent.putExtra("badiId", selected.getId());
-                intent.putExtra("name", selected.getName());
-                startActivity(intent);
-            }
-        };
-        badis.setOnItemClickListener(mListClickedHandler);
-
-        return view;
-    }
-
 }
+
+protected void onCreateview(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_camera, container, false);
+        super.onCreate(savedInstanceState);
+        setContent(R.layout.fragment_videoandphoto);
+        progressBar = view.findViewById(R.id.imageliste);
+        Intent intent = getIntent();
+        badiId = intent.getIntExtra(MainActivity.EXTRA_BADI_ID, 0);
+        String name = intent.getStringExtra(MainActivity.EXTRA_BADI_NAME);
+        setTitle(name);
+        }
+
+@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+        }
+
+@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.action_favorite:
+        Intent intent = new Intent(getApplicationContext(), BadiFavoritesActivity.class);
+        startActivity(intent);
+        return true;
+        case android.R.id.home:
+        onBackPressed();
+        return true;
+default:
+        return super.onOptionsItemSelected(item);
+        }
+        }
+
+
+@Override
+protected void onStart() {
+        super.onStart();
+        progressBar.setVisibility(View.VISIBLE);
+        getBadiTemp(WIE_WARM_API_URL + badiId);
+        }
+
+private void getBadiTemp(String url)
+        {
+final ArrayAdapter<Becken> beckenInfosAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1);
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+final Activity mainActivity = this;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        new Response.Listener<String>() {
+@Override
+public void onResponse(String response) {
+        progressBar.setVisibility(View.GONE);
+        try {
+        Badi badi = WieWarmJsonParser.createBadiFromJsonString(response);
+        beckenInfosAdapter.addAll(badi.getBecken());
+        ListView badiInfoList = findViewById(R.id.becken_infos);
+        badiInfoList.setAdapter(beckenInfosAdapter);
+
+        } catch (JSONException e) {
+        Log.e(TAG, e.getMessage(), e);
+        DialogHelper.generateAlertDialog(mainActivity, getString(R.string.all_error), getString(R.string.badiDetails_alertDialogLoadingBadis));
+        }
+
+        }
+        }, new Response.ErrorListener() {
+@Override
+public void onErrorResponse(VolleyError error) {
+        DialogHelper.generateAlertDialog(mainActivity, getString(R.string.all_error), getString(R.string.badiDetails_alertDialogLoadingBadis));
+        }
+        });
+
+        queue.add(stringRequest);
+        }
+
+
+        }
+
 
 
 

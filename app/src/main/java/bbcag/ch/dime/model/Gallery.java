@@ -3,42 +3,38 @@ package bbcag.ch.dime.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Gallery {
     private int id;
     private String name;
-    private List<Editor> beckenList = new ArrayList<>();
-    private String kanton;
-    private String ort;
+    private List<Editor> imageList;
+    private String image;
+    private String date;
 
-    public Gallery() {
-    }
-
-    public Gallery(int id, String name, String ort, String kanton) {
+    public Gallery(int id, String name, String date, String image) {
         this.id = id;
         this.name = name;
-        this.ort = ort;
-        this.kanton = kanton;
+        this.date = date;
+        this.image = image;
     }
 
-    @Override
-    public String toString() {
-        return name + " " + ort + " (" + kanton + ")";
+    public Gallery(){
+        imageList = new ArrayList<>();
     }
 
-
-    public void addBecken(Editor becken) {
-        this.beckenList.add(becken);
+    public String getImage() {
+        return image;
     }
 
-    public int getId() {
-        return id;
+    public void setImage(String kanton) {
+        this.image = image;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String ort) {
+        this.date = date;
     }
 
     public String getName() {
@@ -49,28 +45,23 @@ public class Gallery {
         this.name = name;
     }
 
-    public List getBeckenList() {
-        return beckenList;
+    public int getId() {
+        return id;
     }
 
-    public void setBeckenList(ArrayList becken) {
-        this.beckenList = becken;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getKanton() {
-        return kanton;
+
+    public List<Editor> getBecken() {
+        return imageList;
     }
 
-    public void setKanton(String kanton) {
-        this.kanton = kanton;
+    public String toString() {
+        return String.format("%s %s (%s)", date, name, image);
     }
 
-    public String getOrt() {
-        return ort;
-    }
 
-    public void setOrt(String ort) {
-        this.ort = ort;
-    }
 }
 

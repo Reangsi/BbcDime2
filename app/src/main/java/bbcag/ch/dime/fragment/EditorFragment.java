@@ -19,9 +19,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 
-import bbcag.ch.dime.helper.WieWarmJsonParser;
 import bbcag.ch.dime.model.Gallery;
-import bbcag.ch.dime.model.Editor;
 import bbcag.ch.dime.R;
 
 public class EditorFragment extends AppCompatActivity {
