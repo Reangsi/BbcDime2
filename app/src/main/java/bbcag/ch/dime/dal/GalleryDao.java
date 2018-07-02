@@ -58,7 +58,7 @@ public class GalleryDao extends BaseDao {
         while (cursor.moveToNext()) {
             Gallery gallery = new Gallery();
             gallery.setId(cursor.getInt(0));
-            gallery.setImage(cursor.getString(1));
+            gallery.setImage(cursor.getBlob(1));
             gallery.setName(cursor.getString(2));
             gallery.setDate(cursor.getString(3));
             result.add(gallery);
@@ -117,7 +117,7 @@ public class GalleryDao extends BaseDao {
         cursor.moveToFirst();
         Gallery gallery = new Gallery();
         gallery.setId(cursor.getInt(0));
-        gallery.setImage(cursor.getString(1));
+        gallery.setImage(cursor.getBlob(1));
         gallery.setName(cursor.getString(2));
         gallery.setDate(cursor.getString(3));
         cursor.close();

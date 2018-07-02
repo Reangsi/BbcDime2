@@ -1,7 +1,7 @@
 package bbcag.ch.dime.db;
 
 public class ImageSqlTable extends BaseSqlTable {
-    public static final String tableImage = "Image";
+    public static final String tableImage = " Image";
 
     public static final String image_ID= "id";
     public static final String image_IMAGE= "image";
@@ -14,9 +14,8 @@ public class ImageSqlTable extends BaseSqlTable {
         return "CREATE TABLE" + tableImage + "(" +
                 image_ID + type_INT + type_NOTNULL + sep_COMMA  +
                 image_IMAGE + type_VARCHAR45 + type_NOTNULL + sep_COMMA +
-                image_NAME + type_VARCHAR45 + type_NOTNULL + type_AUTOINCREMENT + sep_COMMA +
-                image_DATE + type_DATETIME + type_NOTNULL + sep_COMMA +
-                type_PRIMARYKEY + "(" + image_ID + "));";
+                image_NAME + type_VARCHAR45 + type_NOTNULL + sep_COMMA +
+                image_DATE + type_DATETIME + type_NOTNULL + " );";
     }
 
     static String getSqlQueryForDropTable()

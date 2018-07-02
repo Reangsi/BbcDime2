@@ -13,6 +13,7 @@ import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
+import android.icu.text.SimpleDateFormat;
 import android.media.Image;
 import android.media.ImageReader;
 import android.os.Bundle;
@@ -40,9 +41,12 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import bbcag.ch.dime.R;
+import bbcag.ch.dime.dal.GalleryDao;
+import bbcag.ch.dime.model.Gallery;
 
 public class CameraFragment extends Fragment {
     private static final String TAG = "AndroidCameraApi";
@@ -68,6 +72,9 @@ public class CameraFragment extends Fragment {
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
 
+
+    private GalleryDao dao;
+
     public static CameraFragment newInstance() {
             CameraFragment fragment = new CameraFragment();
             return fragment;
@@ -87,6 +94,7 @@ public class CameraFragment extends Fragment {
                 takePicture();
             }
         });
+        dao = GalleryDao.getInstance(getContext());
         return view;
     }
 
@@ -205,9 +213,18 @@ public class CameraFragment extends Fragment {
                     try {
                         output = new FileOutputStream(file);
                         output.write(bytes);
+
                     } finally {
                         if (null != output) {
                             output.close();
+                        } else {
+                            Gallery gallery = new Gallery();
+                            gallery.setImage(bytes);
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd MMM,yyyy HH:mm");
+                            Date resultDate = new Date(System.currentTimeMillis());
+                            gallery.setDate(sdf.format(resultDate).toString());
+                            dao.add(gallery);
+
                         }
                     }
                 }

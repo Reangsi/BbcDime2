@@ -6,11 +6,10 @@ import java.util.List;
 public class Gallery {
     private int id;
     private String name;
-    private List<Editor> imageList;
-    private String image;
+    private byte[] image;
     private String date;
 
-    public Gallery(int id, String name, String date, String image) {
+    public Gallery(int id, String name, String date, byte[] image) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -18,14 +17,14 @@ public class Gallery {
     }
 
     public Gallery(){
-        imageList = new ArrayList<>();
+
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String kanton) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
@@ -33,7 +32,7 @@ public class Gallery {
         return date;
     }
 
-    public void setDate(String ort) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -53,13 +52,8 @@ public class Gallery {
         this.id = id;
     }
 
-
-    public List<Editor> getBecken() {
-        return imageList;
-    }
-
     public String toString() {
-        return String.format("%s %s (%s)", date, name, image);
+        return String.format("%s %s (%d)", date, name, image);
     }
 
 

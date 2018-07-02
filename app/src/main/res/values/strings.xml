@@ -6,4 +6,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="take_picture">Take picture</string>
+
+    <string name="all_ok">Ok</string>
+    <string name="all_error">Error</string>
+    <string name="images_alertDialogLoadingBadis">Could not load list of available images. Please try later.</string>
 </resources>

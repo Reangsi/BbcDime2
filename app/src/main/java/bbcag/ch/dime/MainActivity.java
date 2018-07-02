@@ -4,12 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
+import bbcag.ch.dime.db.ImageDatabaseHelper;
 import bbcag.ch.dime.fragment.CameraFragment;
 import bbcag.ch.dime.fragment.VideoAndPhotoFragment;
 import android.support.v4.app.Fragment;
