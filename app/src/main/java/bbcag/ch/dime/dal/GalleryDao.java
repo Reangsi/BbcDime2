@@ -20,14 +20,10 @@ public class GalleryDao extends BaseDao {
     }
 
     public static synchronized GalleryDao getInstance(Context context) {
-        // Use the application context, which will ensure that you
-        // don't accidentally leak an Activity's context.
-        // See this article for more information: http://bit.ly/6LRzfx
         if (instance == null) {
             instance = new GalleryDao(context.getApplicationContext());
         }
 
-        // If a db.close() was made before, we need to reopen the database
         if (instance != null && !instance.db.isOpen()) {
             instance.open();
         }
@@ -36,7 +32,7 @@ public class GalleryDao extends BaseDao {
 
     public List<Gallery> getAll() {
         String[] projection = {
-                ImageSqlTable._ID,
+                ImageSqlTable.image_ID,
                 ImageSqlTable.image_IMAGE,
                 ImageSqlTable.image_NAME,
                 ImageSqlTable.image_DATE,
@@ -70,7 +66,7 @@ public class GalleryDao extends BaseDao {
 
     public long add(Gallery gallery) throws SQLException {
         ContentValues values = new ContentValues();
-        values.put(ImageSqlTable._ID, gallery.getId());
+        values.put(ImageSqlTable.image_ID, gallery.getId());
         values.put(ImageSqlTable.image_NAME, gallery.getName());
         values.put(ImageSqlTable.image_IMAGE, gallery.getImage());
         values.put(ImageSqlTable.image_DATE, gallery.getDate());
@@ -83,7 +79,7 @@ public class GalleryDao extends BaseDao {
         values.put(ImageSqlTable.image_NAME, gallery.getName());
         values.put(ImageSqlTable.image_IMAGE, gallery.getImage());
         values.put(ImageSqlTable.image_DATE, gallery.getDate());
-        String where = ImageSqlTable._ID + " = ?";
+        String where = ImageSqlTable.image_ID + " = ?";
         String[] args = {Integer.toString(gallery.getId())};
         db.update(ImageSqlTable.tableImage, values, where, args);
     }
@@ -91,13 +87,13 @@ public class GalleryDao extends BaseDao {
 
     public Gallery getByIdOrNull(int id) {
         String[] projection = {
-                ImageSqlTable._ID,
+                ImageSqlTable.image_ID,
                 ImageSqlTable.image_NAME,
                 ImageSqlTable.image_DATE,
                 ImageSqlTable.image_IMAGE,
         };
 
-        String where = ImageSqlTable._ID + " = ?";
+        String where = ImageSqlTable.image_ID + " = ?";
         String[] args = {Integer.toString(id)};
 
         Cursor cursor = db.query(

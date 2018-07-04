@@ -8,15 +8,15 @@ import bbcag.ch.dime.db.ImageDatabaseHelper;
 
 public abstract class BaseDao {
     private ImageDatabaseHelper dbHelper;
-    SQLiteDatabase db;
+       SQLiteDatabase db;
 
-    BaseDao(Context context) {
+    public BaseDao(Context context) {
         dbHelper = ImageDatabaseHelper.getInstance(context);
         open();
     }
 
 
-    void open() throws SQLiteException {
+    public void open() throws SQLiteException {
         db = dbHelper.getWritableDatabase();
     }
 

@@ -4,10 +4,10 @@ import android.provider.BaseColumns;
 
 class BaseSqlTable implements BaseColumns {
     static final String sep_COMMA = ",";
-    static final String type_VARCHAR45 = " VARCHAR(45)";
-    static final String type_INT = " INT";
+    static final String type_VARCHAR45 = " VARCHAR(255)";
+    static final String type_INT = " INTEGER";
     static final String type_DATETIME = " DATETIME";
-    static final String type_NOTNULL = " NOT NULL";
-    static final String type_AUTOINCREMENT = " AUTO_INCREMENT";
-    static final String type_PRIMARYKEY = " PRIMARY KEY";
+    static final String type_BLOB = " BLOB";
+    static final String type_AUTOINCREMENT = " AUTOINCREMENT";
+    static final String type_PRIMARY_KEY = " PRIMARY KEY";
 }

@@ -83,6 +83,7 @@ public class CameraFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_camera, container, false);
         super.onCreate(savedInstanceState);
+        dao = GalleryDao.getInstance(getContext());
         textureView = (TextureView) view.findViewById(R.id.texture);
         assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
@@ -94,7 +95,7 @@ public class CameraFragment extends Fragment {
                 takePicture();
             }
         });
-        dao = GalleryDao.getInstance(getContext());
+
         return view;
     }
 
@@ -209,7 +210,7 @@ public class CameraFragment extends Fragment {
                     }
                 }
                 private void save(byte[] bytes) throws IOException {
-                    OutputStream output = null;
+                    /*OutputStream output = null;
                     try {
                         output = new FileOutputStream(file);
                         output.write(bytes);
@@ -217,16 +218,17 @@ public class CameraFragment extends Fragment {
                     } finally {
                         if (null != output) {
                             output.close();
-                        } else {
+                        } else {*/
                             Gallery gallery = new Gallery();
                             gallery.setImage(bytes);
                             SimpleDateFormat sdf = new SimpleDateFormat("dd MMM,yyyy HH:mm");
                             Date resultDate = new Date(System.currentTimeMillis());
                             gallery.setDate(sdf.format(resultDate).toString());
+                            gallery.setName("default");
                             dao.add(gallery);
 
-                        }
-                    }
+/*                        }
+                    }*/
                 }
             };
             reader.setOnImageAvailableListener(readerListener, mBackgroundHandler);
