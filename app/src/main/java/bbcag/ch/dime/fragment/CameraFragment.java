@@ -83,6 +83,7 @@ public class CameraFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_camera, container, false);
         super.onCreate(savedInstanceState);
+
         dao = GalleryDao.getInstance(getContext());
         textureView = (TextureView) view.findViewById(R.id.texture);
         assert textureView != null;
@@ -102,12 +103,10 @@ public class CameraFragment extends Fragment {
     TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {
         @Override
         public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-            //open your camera here
             openCamera();
         }
         @Override
         public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-            // Transform you image captured size according to the surface width and height
         }
         @Override
         public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
@@ -120,7 +119,6 @@ public class CameraFragment extends Fragment {
     private final CameraDevice.StateCallback stateCallback = new CameraDevice.StateCallback() {
         @Override
         public void onOpened(CameraDevice camera) {
-            //This is called when the camera is open
             Log.e(TAG, "onOpened");
             cameraDevice = camera;
             createCameraPreview();
@@ -163,7 +161,6 @@ public class CameraFragment extends Fragment {
             Log.e(TAG, "cameraDevice is null");
             return;
         }
-        //sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         CameraManager manager = (CameraManager) getActivity().getSystemService(Context.CAMERA_SERVICE);
 
         try {
@@ -210,15 +207,6 @@ public class CameraFragment extends Fragment {
                     }
                 }
                 private void save(byte[] bytes) throws IOException {
-                    /*OutputStream output = null;
-                    try {
-                        output = new FileOutputStream(file);
-                        output.write(bytes);
-
-                    } finally {
-                        if (null != output) {
-                            output.close();
-                        } else {*/
                             Gallery gallery = new Gallery();
                             gallery.setImage(bytes);
                             SimpleDateFormat sdf = new SimpleDateFormat("dd MMM,yyyy HH:mm");
@@ -268,11 +256,9 @@ public class CameraFragment extends Fragment {
             cameraDevice.createCaptureSession(Arrays.asList(surface), new CameraCaptureSession.StateCallback(){
                 @Override
                 public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
-                    //The camera is already closed
                     if (null == cameraDevice) {
                         return;
                     }
-                    // When the session is ready, we start displaying the preview.
                     cameraCaptureSessions = cameraCaptureSession;
                     updatePreview();
                 }
@@ -294,7 +280,6 @@ public class CameraFragment extends Fragment {
             StreamConfigurationMap map = characteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
             assert map != null;
             imageDimension = map.getOutputSizes(SurfaceTexture.class)[0];
-            // Add permission for camera and let user grant the permission
             if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CAMERA_PERMISSION);
                 return;
@@ -330,7 +315,6 @@ public class CameraFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
-                // close the app
                 Toast.makeText(getContext(), "Sorry!!!, you can't use this app without granting permission", Toast.LENGTH_LONG).show();
                 getActivity().finish();
             }
@@ -351,7 +335,6 @@ public class CameraFragment extends Fragment {
     @Override
     public void onPause() {
         Log.e(TAG, "onPause");
-        //closeCamera();
         stopBackgroundThread();
         super.onPause();
     }

@@ -20,6 +20,7 @@ public class GalleryDao extends BaseDao {
     }
 
     public static synchronized GalleryDao getInstance(Context context) {
+
         if (instance == null) {
             instance = new GalleryDao(context.getApplicationContext());
         }

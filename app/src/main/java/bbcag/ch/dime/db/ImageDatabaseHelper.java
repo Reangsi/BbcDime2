@@ -9,7 +9,7 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
     private static ImageDatabaseHelper instance;
 
     private static final String DATABASE_NAME = "DimeDatabase3";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private ImageDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -32,11 +32,5 @@ public class ImageDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-
-/*    @Override
-    protected void onDestroy() {
-        ImageDatabaseHelper.close();
-        super.onDestroy();
-    }*/
 
 }
