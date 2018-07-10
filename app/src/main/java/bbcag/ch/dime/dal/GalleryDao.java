@@ -1,11 +1,11 @@
 package bbcag.ch.dime.dal;
 
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 

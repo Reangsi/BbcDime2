@@ -1,7 +1,5 @@
 package bbcag.ch.dime.model;
 
-import java.util.ArrayList;
-
 public class Editor {
     private String name;
     private double temperature;
@@ -24,6 +22,6 @@ public class Editor {
 
     @Override
     public String toString() {
-        return getName()+": "+getTemperature()+" °C";
+        return getName() + ": " + getTemperature() + " °C";
     }
 }

@@ -12,27 +12,23 @@ import bbcag.ch.dime.dal.GalleryDao;
 import bbcag.ch.dime.helper.TextHelper;
 
 public class VideoAndPhotoFragment extends Fragment {
-        private ProgressBar progressBar;
-        View view;
-        private GalleryDao dao;
+    private ProgressBar progressBar;
+    View view;
+    private GalleryDao dao;
 
-        public static VideoAndPhotoFragment newInstance() {
-            VideoAndPhotoFragment fragment = new VideoAndPhotoFragment();
-            return fragment;
-        }
+    public static VideoAndPhotoFragment newInstance() {
+        VideoAndPhotoFragment fragment = new VideoAndPhotoFragment();
+        return fragment;
+    }
 
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-                View view = inflater.inflate(R.layout.fragment_videoandphoto, container, false);
-                super.onCreate(savedInstanceState);
-                dao.getAll();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_videoandphoto, container, false);
+        super.onCreate(savedInstanceState);
+        dao.getAll();
 
-                progressBar = view.findViewById(R.id.imageliste);
-                return view;
-        }
-
-        private void generateAlertDialog() {
-            //TextHelper.generateAlertDialog(this, getString(R.string.all_error), getString(R.string.images_alertDialogLoadingBadis));
-        }
+        progressBar = view.findViewById(R.id.imageliste);
+        return view;
+    }
 }
 
 

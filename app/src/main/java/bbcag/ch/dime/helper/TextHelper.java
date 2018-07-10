@@ -13,8 +13,6 @@ public class TextHelper {
         dialogBuilder = new AlertDialog.Builder(fragment.getContext());
         dialogBuilder.setPositiveButton(fragment.getString(R.string.all_ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // Closes this activity
-                //activity.finish();
             }
         });
         dialogBuilder.setMessage(message).setTitle(title);

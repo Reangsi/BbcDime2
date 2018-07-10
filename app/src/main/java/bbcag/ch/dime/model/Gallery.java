@@ -1,8 +1,5 @@
 package bbcag.ch.dime.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Gallery {
     private int id;
     private String name;
@@ -16,7 +13,7 @@ public class Gallery {
         this.image = image;
     }
 
-    public Gallery(){
+    public Gallery() {
 
     }
 
